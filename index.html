@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en" class="loading">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thompson Finance &amp; Leasing</title>
+<meta name="description" content="Home loans, refinancing, business, commercial and asset finance, arranged by a local Woodside team.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#10223E;
+  --green:#7E9C91;
+  --green-light:#B6DBCC;
+  --green-pale:#A9C1B7;
+  --ink:#333333;
+  --white:#ffffff;
+  --head:'Montserrat',sans-serif;
+  --body:'Inter',sans-serif;
+  --wrap:1090px;
+  --ease:cubic-bezier(.22,.8,.25,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--ink);background:var(--white);font-size:18px;line-height:1.56;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--head);font-weight:600;text-transform:uppercase;line-height:1.18;letter-spacing:-.005em}
+.wrap{width:min(var(--wrap),100% - 48px);margin-inline:auto}
+
+/* buttons */
+.btn{display:inline-block;background:var(--green);color:#fff;font-family:var(--body);font-weight:500;font-size:20px;letter-spacing:.01em;padding:12px 19px;text-transform:uppercase;position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease)}
+.btn::before{content:"";position:absolute;inset:0;background:var(--navy);transform:translateX(-101%);transition:transform .5s var(--ease);z-index:-1}
+.btn:hover::before{transform:none}
+.btn--navy{background:var(--navy)}
+.btn--navy::before{background:var(--green)}
+
+/* decorative outline square */
+.deco{position:absolute;width:96px;height:96px;border:4px solid currentColor;pointer-events:none;z-index:0}
+h1,h2,h3{position:relative;z-index:1}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(36px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.rv-l{transform:translateX(-40px)}
+.rv-r{transform:translateX(40px)}
+.rv-l.in,.rv-r.in{transform:none}
+.deco.rv{transform:translate(-18px,-18px) scale(.7)}
+.deco.rv.in{transform:none}
+
+/* ---------- LOADER ---------- */
+.loading{overflow:hidden}
+.loader{position:fixed;inset:0;z-index:100;background:var(--navy);display:grid;place-items:center;overflow:hidden;clip-path:inset(0 0 0 0);transition:clip-path 1.1s var(--ease)}
+.loader video{width:50%;height:50%;object-fit:contain;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 45%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 45%,transparent 100%);transition:transform 1.1s var(--ease),opacity .8s}
+.loader.done{clip-path:inset(0 0 100% 0)}
+.loader__skip{position:absolute;right:clamp(24px,4vw,56px);bottom:clamp(24px,4vw,48px);background:none;border:0;color:rgba(255,255,255,.65);font:500 13px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 0;opacity:0;animation:skipIn .6s .8s forwards;transition:color .3s}
+.loader__skip::after{content:"";width:22px;height:1px;background:currentColor;transition:width .35s var(--ease)}
+.loader__skip:hover{color:#fff}
+.loader__skip:hover::after{width:36px}
+.loader.done .loader__skip{opacity:0;transition:opacity .3s}
+@keyframes skipIn{to{opacity:1}}
+.loader.done video{transform:translateY(-6%);opacity:0}
+@media (max-aspect-ratio:1/1){.loader video{width:80%;max-width:none;height:auto}}
+
+/* ---------- 00 HEADER ---------- */
+.hdr{position:fixed;inset:0 0 auto;z-index:50;padding:28px 0 18px;transition:background .4s,padding .4s,box-shadow .4s}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between}
+.hdr__logo{width:254px;transition:width .4s var(--ease)}
+.hdr__right{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+.hdr__tel{color:var(--green-light);font-size:16px}
+.hdr__tel b{font-weight:400;transition:color .3s}
+.hdr__tel:hover b{color:#fff}
+.nav{display:flex;gap:0}
+.nav a{color:#fff;font-size:16px;padding:4px 17px 8px;margin-left:24px;position:relative}
+.nav a:last-child{margin-right:-17px}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:var(--green-light);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.nav a:hover::after,.nav a:focus-visible::after{transform:scaleX(1)}
+.hdr.solid{background:rgba(16,34,62,.96);padding:12px 0;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.hdr.solid .hdr__logo{width:190px}
+.hdr.solid .hdr__right{gap:6px}
+.burger{display:none;background:none;border:0;width:40px;height:40px;position:relative;cursor:pointer}
+.burger span{position:absolute;left:8px;right:8px;height:2px;background:#fff;transition:transform .35s,opacity .35s}
+.burger span:nth-child(1){top:13px}.burger span:nth-child(2){top:19px}.burger span:nth-child(3){top:25px}
+.menu-open .burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.menu-open .burger span:nth-child(2){opacity:0}
+.menu-open .burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* ---------- 01 HERO ---------- */
+.hero{position:relative;height:776px;min-height:600px;color:#fff;overflow:hidden;background:var(--navy)}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 8s var(--ease)}
+.ready .hero video{transform:scale(1)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,34,64,.78) 0%,rgba(14,34,64,.62) 45%,rgba(14,34,64,.72) 100%)}
+.hero__in{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:115px;width:min(var(--wrap),100% - 48px);margin-inline:auto}
+.hero h1{font-size:clamp(34px,4.25vw,54px);line-height:1.22;margin-bottom:22px}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln span{display:block;transform:translateY(105%);transition:transform 1.1s var(--ease)}
+.hero h1 .ln:nth-child(2) span{transition-delay:.15s}
+.hero h1 .ln:nth-child(3) span{transition-delay:.3s}
+.ready .hero h1 .ln span{transform:none}
+.hero p{max-width:510px;font-size:18px;line-height:28px;margin-bottom:46px}
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,.6s)}
+.ready .fade-in{opacity:1;transform:none}
+.hero__scroll{position:absolute;z-index:2;left:50%;bottom:28px;width:1px;height:56px;background:rgba(255,255,255,.25);overflow:hidden}
+.hero__scroll::after{content:"";position:absolute;left:0;top:-50%;width:100%;height:50%;background:var(--green-light);animation:scrollCue 2.2s ease-in-out infinite}
+@keyframes scrollCue{to{top:100%}}
+
+/* ---------- 02 STATS ---------- */
+.stats{padding:126px 0 115px}
+.stats__grid{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;width:min(1137px,100% - 48px);margin-inline:auto}
+.stat__box{position:relative;width:205px;height:198px;margin:0 auto 8px}
+.stat__frame{position:absolute;left:0;top:0;width:172px;height:172px;border:7px solid var(--green);clip-path:inset(0 100% 100% 0);transition:clip-path 1.2s var(--ease) .1s}
+.stat__sq{position:absolute;left:24px;top:24px;width:165px;height:165px;background:var(--navy);display:grid;place-items:center;transform:scale(.6);opacity:0;transition:transform .9s var(--ease),opacity .9s var(--ease)}
+.stat__tab{position:absolute;right:0;bottom:0;width:31px;height:18px;background:var(--green);transform:scale(0);transform-origin:right bottom;transition:transform .5s var(--ease) .9s}
+.stat.in .stat__frame{clip-path:inset(0 0 0 0)}
+.stat.in .stat__sq{transform:none;opacity:1}
+.stat.in .stat__tab{transform:none}
+.stat__num{font-size:66px;font-weight:500;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.stat__lbl{font-size:25px;font-weight:500;line-height:28px;color:#1a1a1a;text-transform:uppercase}
+
+/* ---------- 03 INTRO ---------- */
+.intro{display:grid;grid-template-columns:786fr 494fr;background:var(--green);color:#fff;min-height:632px}
+.intro__txt{display:flex;flex-direction:column;justify-content:center;padding:110px 64px 110px max(24px,calc((100% / .6140625 - var(--wrap)) / 2))}
+.intro__body{position:relative}
+.intro__txt .deco{left:-54px;top:-64px;color:rgba(255,255,255,.4)}
+.intro h2{font-size:clamp(32px,3.7vw,47px);line-height:1.19;margin-bottom:42px}
+.intro p{max-width:625px;margin-bottom:28px}
+.intro p:last-child{margin-bottom:0}
+.intro__img{overflow:hidden;position:relative}
+.intro__img img{width:100%;height:100%;object-fit:cover;object-position:30% center;transform:scale(1.15);transition:transform 1.6s var(--ease)}
+.intro__img.in img{transform:scale(1)}
+
+/* ---------- 04 WHY ---------- */
+.why{position:relative;background:var(--navy);color:#fff;text-align:center;padding:134px 0 138px}
+.why .wrap{position:relative;max-width:930px}
+.why .deco{left:35px;top:-66px;color:rgba(255,255,255,.3)}
+.why h2{font-size:clamp(30px,3.7vw,47px);line-height:1.19;margin-bottom:44px}
+.why p{margin-bottom:28px}
+
+/* ---------- 05 SERVICES ---------- */
+.svc{position:relative;padding:84px 0 0;overflow:hidden;overflow:clip}
+.svc__grid{display:grid;grid-template-columns:473px 1fr;width:min(var(--wrap),100% - 48px);margin-inline:auto}
+.svc__head{position:relative}
+.svc__head .deco{left:-54px;top:12px;color:#d6e2de}
+.svc h2{font-size:clamp(46px,6.3vw,81px);line-height:.96;color:var(--ink);position:sticky;top:140px;margin-top:42px}
+.svc__list{list-style:none;display:grid;grid-auto-rows:1fr}
+.svc__item{position:relative;padding:42px 0 42px 27px}
+.svc__item::before{content:"";position:absolute;top:0;bottom:0;left:-73px;right:-100vw;background:linear-gradient(90deg,rgba(126,156,145,0) 0%,rgba(126,156,145,.22) 35%,rgba(126,156,145,.5) 100%);opacity:0;transform:translateX(60px);transition:opacity .5s var(--ease),transform .7s var(--ease);z-index:-1;pointer-events:none}
+.svc__item:hover::before{opacity:1;transform:none}
+.svc__item h3{font-size:28px;color:var(--ink);position:relative;margin-bottom:18px}
+.svc__item h3::before{content:"";position:absolute;left:-27px;top:.42em;width:14px;height:14px;background:var(--green);transition:transform .5s var(--ease)}
+.svc__item:hover h3::before{transform:rotate(90deg)}
+.svc__item p{max-width:535px;margin-left:3px}
+.arrow{display:block;width:74px;height:16px;margin:12px 0 0 2px;transition:width .5s var(--ease)}
+.arrow svg{width:100%;height:100%;overflow:visible}
+.svc__item:hover .arrow{width:120px}
+.svc{isolation:isolate}
+
+/* ---------- 06 PROCESS ---------- */
+.proc{position:relative;color:#fff;text-align:center;padding:155px 0 120px;overflow:hidden;background:var(--navy)}
+.proc__bg{position:absolute;inset:-12% 0;background:url(assets/06_process_bg.jpg) center/cover;will-change:transform}
+.proc::after{content:"";position:absolute;inset:0;background:rgba(16,34,62,.72)}
+.proc .wrap{position:relative;z-index:2}
+.proc .deco{left:calc(50% - 388px);top:-55px;color:rgba(255,255,255,.35)}
+.proc h2{font-size:clamp(30px,3.7vw,47px);color:var(--green-light);margin-bottom:26px}
+.proc__lead{margin-bottom:58px}
+.steps{list-style:none}
+.step h3{font-family:var(--body);text-transform:none;font-weight:400;font-size:clamp(28px,2.8vw,36px);color:var(--green-light);line-height:1.2;margin-bottom:12px;letter-spacing:0}
+.step p{line-height:24px}
+.step__arrow{display:block;margin:6px auto 2px;width:16px;height:26px;color:#fff}
+.step__arrow line,.step__arrow polyline{stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset .7s var(--ease) .35s}
+.step.in .step__arrow line,.step.in .step__arrow polyline{stroke-dashoffset:0}
+.proc .btn{margin-top:72px}
+
+/* ---------- 07 TESTIMONIALS ---------- */
+.tst{background:var(--green);color:#fff;padding:90px 0 0;overflow:hidden}
+.tst h2{text-align:center;font-size:clamp(30px,3.7vw,47px);line-height:1.19}
+.tst__rule{height:2px;background:rgba(255,255,255,.55);margin:52px auto 76px;width:min(1165px,100% - 48px);transform:scaleX(0);transition:transform 1.4s var(--ease)}
+.tst__rule.in{transform:none}
+.tst__viewport{width:min(var(--wrap),100% - 48px);margin-inline:auto;overflow:hidden;--gap:90px;--per:3}
+.tst__track{display:flex;gap:var(--gap);will-change:transform}
+.tst__track.anim{transition:transform .9s var(--ease)}
+.tst__track figure{flex:0 0 calc((100% - var(--gap) * (var(--per) - 1)) / var(--per))}
+.tst__dots{display:flex;justify-content:center;gap:12px;margin-top:56px}
+.tst__dots button{width:10px;height:10px;padding:0;border-radius:50%;border:1px solid #fff;background:transparent;cursor:pointer;transition:background .4s,width .4s var(--ease),border-radius .4s}
+.tst__dots button.on{background:#fff;width:28px;border-radius:5px}
+.q{width:42px;height:38px;margin-bottom:46px}
+.tst blockquote{font-size:16px;line-height:21px;white-space:pre-line}
+.tst cite{display:block;font-family:var(--head);font-style:italic;font-weight:500;font-size:26px;text-transform:uppercase;margin-top:42px}
+.tst__word{margin-top:40px;width:100%;line-height:0}
+.tst__word img{width:100%;transform:translateY(30%);opacity:.6}
+
+/* ---------- 08 TEAM ---------- */
+.team{position:relative;color:#fff;text-align:center;overflow:hidden;min-height:855px;display:flex;align-items:flex-end}
+.team__bg{position:absolute;inset:0;background:url(assets/08_team_photo.jpg) center top/cover;transform:scale(1.1);transition:transform 2.4s var(--ease)}
+.team.in .team__bg{transform:scale(1)}
+.team::before{content:"";position:absolute;inset:0 0 auto;height:36px;background:linear-gradient(rgba(0,0,0,.18),transparent);z-index:1}
+.team::after{content:"";position:absolute;inset:auto 0 0;height:62%;background:radial-gradient(ellipse 55% 60% at 50% 70%,rgba(30,35,40,.55),transparent 75%)}
+.team .wrap{position:relative;z-index:2;padding-bottom:144px;max-width:780px}
+.team h2{font-size:clamp(30px,3.7vw,47px);line-height:1.19;margin-bottom:34px;text-shadow:0 2px 24px rgba(0,0,0,.25)}
+.team p{margin-bottom:28px;text-shadow:0 1px 12px rgba(0,0,0,.4)}
+.team .btn{margin-top:22px}
+
+/* ---------- 09 CONTACT ---------- */
+.contact{display:grid;grid-template-columns:680fr 600fr}
+.contact__l{background:var(--green-pale);color:#fff;padding:123px 78px 96px max(24px,calc((100% / .53125 - var(--wrap)) / 2))}
+.contact__pic{position:relative;max-width:516px;margin-bottom:32px}
+.contact__pic .mark{position:absolute;right:-24px;top:-25px;width:62px;z-index:2}
+.contact__pic .ph{overflow:hidden}
+.contact__pic .ph img{width:100%;aspect-ratio:516/247;object-fit:cover;transform:scale(1.12);transition:transform 1.6s var(--ease)}
+.contact__pic.in .ph img{transform:scale(1)}
+.contact h2{font-size:clamp(32px,3.7vw,47px);line-height:1.19;margin-bottom:32px}
+.contact__l p{font-size:16px;line-height:21px;max-width:510px;margin-bottom:21px}
+.contact__r{background:var(--green);padding:180px max(24px,calc((100% / .46875 - var(--wrap)) / 2)) 80px 66px;color:#fff}
+.field{position:relative;margin-bottom:52px}
+.field label{display:block;font-size:16px;margin-bottom:20px}
+.field input,.field textarea{width:100%;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.7);padding:0 0 18px;font:inherit;font-size:16px;color:#fff;outline:none;resize:none}
+.field textarea{height:76px}
+.field ::placeholder{color:rgba(255,255,255,.6)}
+.field::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--navy);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.field:focus-within::after{transform:scaleX(1)}
+.contact__r .btn{display:block;margin:22px auto 0;padding:10px 48px;border:0;cursor:pointer}
+.sent{text-align:center;font-size:16px;margin-top:20px;min-height:24px}
+
+/* ---------- 10 FOOTER ---------- */
+.ftr{background:var(--navy);color:#fff;padding:87px 0 24px}
+.ftr__top{display:grid;grid-template-columns:1.62fr 1fr 1.3fr;width:min(var(--wrap),100% - 48px);margin-inline:auto;font-size:16px;line-height:1.3}
+.ftr__logo{width:254px}
+.ftr dt{color:var(--green-light);margin-bottom:6px}
+.ftr dd{margin-bottom:34px}
+.ftr dd a:hover{color:var(--green-light)}
+.social{display:flex;gap:12px}
+.social a{width:35px;height:35px;transition:transform .35s var(--ease)}
+.social a:hover{transform:translateY(-4px)}
+.ftr__nav{display:flex;flex-wrap:wrap;gap:8px 49px;width:min(var(--wrap),100% - 48px);margin:40px auto 0;font-size:16px;color:var(--green-light)}
+.ftr__nav a:hover{color:#fff}
+.ftr__rule{height:1px;background:rgba(255,255,255,.7);width:min(1173px,100% - 48px);margin:20px auto 12px}
+.ftr__copy{text-align:center;font-size:16px}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1100px){
+  .svc__grid{grid-template-columns:1fr}
+  .svc h2{position:relative;top:auto;margin-bottom:64px}
+  .tst__viewport{--gap:48px}
+  .ftr__top{grid-template-columns:1fr 1fr 1fr}
+}
+@media (max-width:900px){
+  body{font-size:16px}
+  .burger{display:block}
+  .nav a:last-child{margin-right:0}
+  .hdr__right{gap:0}
+  .hdr__tel{display:none}
+  .nav{position:fixed;inset:0;background:var(--navy);flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;pointer-events:none;transition:opacity .4s}
+  .nav a{font-size:24px;margin:0}
+  body:not(.menu-open) .nav{opacity:0;pointer-events:none}
+  .menu-open .nav{opacity:1;pointer-events:auto}
+  .burger,.hdr .wrap>a{z-index:2;position:relative}
+  .hdr__logo{width:180px}
+  .hero{height:92svh}
+  .hero__in{padding-bottom:90px}
+  .stats{padding:80px 0}
+  .stats__grid{grid-template-columns:1fr;gap:48px}
+  .intro,.contact{grid-template-columns:1fr}
+  .intro__img{height:420px;order:-1}
+  .intro__txt{padding:90px 24px 60px}
+  .intro__txt .deco{left:-12px;top:-50px}
+  .why{padding:100px 0}
+  .why .deco{left:0;top:-60px}
+  .svc{padding:90px 0 0}
+  .svc__head .deco{left:-12px}
+  .svc__list{grid-auto-rows:auto}
+  .deco{width:64px;height:64px;border-width:3px}
+  .ftr__copy{padding:0 24px}
+  .proc{padding:110px 0 90px}
+  .proc .deco{left:0;top:-60px}
+  .tst__viewport{--per:1}
+  .team{min-height:760px}
+  .team .wrap{padding-bottom:80px}
+  .contact__l{padding:90px 24px 60px}
+  .contact__pic .mark{right:-6px}
+  .contact__r{padding:70px 24px}
+  .ftr__top{grid-template-columns:1fr;gap:32px}
+  .ftr__nav{gap:12px 28px}
+}
+@media (max-width:520px){
+  .svc__item h3{font-size:22px}
+  .stat__lbl{font-size:20px;line-height:24px}
+  .tst cite{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader"><video id="loaderVid" src="assets/00_loader.mp4" muted autoplay playsinline preload="auto" aria-hidden="true"></video><button type="button" class="loader__skip" id="loaderSkip">Skip</button></div>
+
+<!-- 00 HEADER -->
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a href="#top"><img class="hdr__logo" src="assets/logo.svg" alt="Thompson Finance &amp; Leasing"></a>
+    <div class="hdr__right">
+      <a class="hdr__tel fade-in" style="--d:.2s" href="tel:0812345677">Talk to a broker <b>08 1234 5677</b></a>
+      <nav class="nav fade-in" style="--d:.35s" id="nav">
+        <a href="#services">Home loans</a>
+        <a href="#services">Business</a>
+        <a href="#services">Asset finance</a>
+        <a href="#team">About</a>
+      </nav>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<!-- 01 HERO -->
+<section class="hero">
+  <video autoplay muted loop playsinline preload="auto" src="assets/01_hero_video.mp4"></video>
+  <div class="hero__in">
+    <h1><span class="ln"><span>The finance you need.</span></span><span class="ln"><span>The support to</span></span><span class="ln"><span>see it through.</span></span></h1>
+    <p class="fade-in" style="--d:.7s">Home loans, refinancing, business, commercial and asset finance, arranged by a local Woodside team who stay with you from the first conversation to settlement.</p>
+    <div class="fade-in" style="--d:.9s"><a class="btn" href="#services">See how we can help</a></div>
+  </div>
+  <span class="hero__scroll" aria-hidden="true"></span>
+</section>
+
+<!-- 02 STATS -->
+<section class="stats">
+  <div class="stats__grid">
+    <div class="stat rv" style="--d:0s">
+      <div class="stat__box"><span class="stat__frame"></span><span class="stat__sq"><span class="stat__num" data-to="4.9" data-dec="1">0</span></span><span class="stat__tab"></span></div>
+      <div class="stat__lbl">Google<br>reviews</div>
+    </div>
+    <div class="stat rv" style="--d:.15s">
+      <div class="stat__box"><span class="stat__frame"></span><span class="stat__sq"><span class="stat__num" data-to="10">0</span></span><span class="stat__tab"></span></div>
+      <div class="stat__lbl">Years in the<br>Adelaide Hills</div>
+    </div>
+    <div class="stat rv" style="--d:.3s">
+      <div class="stat__box"><span class="stat__frame"></span><span class="stat__sq"><span class="stat__num" data-to="79">0</span></span><span class="stat__tab"></span></div>
+      <div class="stat__lbl">Lenders<br>compared</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 INTRO -->
+<section class="intro">
+  <div class="intro__txt">
+    <div class="intro__body">
+    <span class="deco rv"></span>
+    <h2 class="rv">You don't need every<br>answer to start</h2>
+    <p class="rv" style="--d:.1s">Most people come to us with one clear goal and a list of open questions.</p>
+    <p class="rv" style="--d:.2s">How will a lender see my income? How much can I borrow? What do I need to prepare, and when?</p>
+    <p class="rv" style="--d:.3s">That's normal. It's exactly what a first conversation is for. Tell us what you're planning, and we'll show you where you stand, what's realistic and what needs to happen next.</p>
+    </div>
+  </div>
+  <div class="intro__img rv-img"><img src="assets/03_intro_photo.jpg" alt="Clients talking with a Thompson broker"></div>
+</section>
+
+<!-- 04 WHY -->
+<section class="why">
+  <div class="wrap">
+    <span class="deco rv"></span>
+    <h2 class="rv">Why finance feels harder<br>than it should</h2>
+    <p class="rv" style="--d:.1s">Finance information is everywhere. Knowing which parts apply to you is the hard bit.</p>
+    <p class="rv" style="--d:.2s">Every lender has its own policies, paperwork and appetite for risk. Self-employed income, buying before you sell or a new business structure can look very different from one lender to the next. Most delays come from small things: a missing document, a policy mismatch, a question nobody raised early.</p>
+    <p class="rv" style="--d:.3s">That's the work we do. We match your situation to the right lenders, prepare the application properly and handle the back-and-forth, so small details don't become big delays.</p>
+  </div>
+</section>
+
+<!-- 05 SERVICES -->
+<section class="svc" id="services">
+  <div class="svc__grid">
+    <div class="svc__head"><span class="deco rv"></span><h2 class="rv rv-l">What<br>we help<br>with</h2></div>
+    <ul class="svc__list">
+      <li class="svc__item rv rv-r">
+        <h3>Home loans</h3>
+        <p>First home, next home, building, investing or self-employed. We'll work out your borrowing capacity, get pre-approval in place and plan the timing, including buying before you sell.</p>
+        <a class="arrow" href="#contact" aria-label="Talk to us about home loans"><svg viewBox="0 0 74 16" preserveAspectRatio="none"><path d="M0 15H74L60 3" fill="none" stroke="#333" stroke-width="1" vector-effect="non-scaling-stroke"/></svg></a>
+      </li>
+      <li class="svc__item rv rv-r">
+        <h3>Refinancing</h3>
+        <p>Your loan should still suit your life. If your rate, repayments or circumstances have changed, we'll compare your current loan with what's available and tell you plainly whether switching is worth it.</p>
+        <a class="arrow" href="#contact" aria-label="Talk to us about refinancing"><svg viewBox="0 0 74 16" preserveAspectRatio="none"><path d="M0 15H74L60 3" fill="none" stroke="#333" stroke-width="1" vector-effect="non-scaling-stroke"/></svg></a>
+      </li>
+      <li class="svc__item rv rv-r">
+        <h3>Asset and vehicle finance</h3>
+        <p>Work vehicles, machinery, equipment and cars. We explain the structure, term, repayments and end-of-term options before you commit, not after.</p>
+        <a class="arrow" href="#contact" aria-label="Talk to us about asset and vehicle finance"><svg viewBox="0 0 74 16" preserveAspectRatio="none"><path d="M0 15H74L60 3" fill="none" stroke="#333" stroke-width="1" vector-effect="non-scaling-stroke"/></svg></a>
+      </li>
+      <li class="svc__item rv rv-r">
+        <h3>Business and commercial finance</h3>
+        <p>Growth, cash flow, equipment or commercial property. We look at your income, structure, assets and plans together, then build the application around what you're trying to achieve.</p>
+        <a class="arrow" href="#contact" aria-label="Talk to us about business finance"><svg viewBox="0 0 74 16" preserveAspectRatio="none"><path d="M0 15H74L60 3" fill="none" stroke="#333" stroke-width="1" vector-effect="non-scaling-stroke"/></svg></a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 06 PROCESS -->
+<section class="proc">
+  <div class="proc__bg" id="procBg"></div>
+  <div class="wrap">
+    <span class="deco rv"></span>
+    <h2 class="rv">How we see it through</h2>
+    <p class="proc__lead rv" style="--d:.1s">From the first chat to settlement day, you'll always know what's happening and what's next.</p>
+    <ol class="steps">
+      <li class="step rv"><h3>First conversation</h3><p>We listen to what you're planning and where you're stuck.</p><svg class="step__arrow" viewBox="0 0 16 26" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="1" x2="8" y2="24"/><polyline points="2,18 8,24 14,18"/></svg></li>
+      <li class="step rv"><h3>Options and a plan</h3><p>We compare lenders, explain your options in plain language and give you a clear list of what to prepare.</p><svg class="step__arrow" viewBox="0 0 16 26" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="1" x2="8" y2="24"/><polyline points="2,18 8,24 14,18"/></svg></li>
+      <li class="step rv"><h3>Application</h3><p>We prepare and lodge it, then answer lender questions on your behalf.</p><svg class="step__arrow" viewBox="0 0 16 26" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="1" x2="8" y2="24"/><polyline points="2,18 8,24 14,18"/></svg></li>
+      <li class="step rv"><h3>Approval to settlement</h3><p>We keep you updated at every step and stay involved until the keys, funds or vehicle are yours.</p><svg class="step__arrow" viewBox="0 0 16 26" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="1" x2="8" y2="24"/><polyline points="2,18 8,24 14,18"/></svg></li>
+      <li class="step rv"><h3>After settlement</h3><p>We check in as your circumstances change, so your finance keeps working for you.</p></li>
+    </ol>
+    <a class="btn rv" href="#contact">Book a free first conversation</a>
+  </div>
+</section>
+
+<!-- 07 TESTIMONIALS -->
+<section class="tst">
+  <h2 class="rv">Adelaide Hills clients, seen<br>through to settlement</h2>
+  <div class="tst__rule rv-line"></div>
+  <div class="tst__viewport rv">
+    <div class="tst__track" id="tstTrack">
+    <figure>
+      <svg class="q" viewBox="0 0 42 38" fill="#fff"><path d="M0 38V22Q0 6 14 0l3 5Q8 10 8 18h9v20zM25 38V22q0-16 14-22l3 5q-9 5-9 13h9v20z"/></svg>
+      <blockquote>Andrew Thompson had been recommended to us by our family who live in the Adelaide Hills. We met with Andrew and discussed our requirements for refinancing our property. Andrew kept us continually up to date with the refinancing process. Andrew’s support staff were so easy to work with and made the application so much easier to complete.
+I am very happy with the Thompson Financing, a very professional team,and would have no hesitation in recommending them to anyone requiring finance.</blockquote>
+      <cite>- Lou Anderson</cite>
+    </figure>
+    <figure>
+      <svg class="q" viewBox="0 0 42 38" fill="#fff"><path d="M0 38V22Q0 6 14 0l3 5Q8 10 8 18h9v20zM25 38V22q0-16 14-22l3 5q-9 5-9 13h9v20z"/></svg>
+      <blockquote>Had Andrew and his team from Thompson Finances assist in both our family business and personal finances. Couldn’t have had better results elsewhere and we couldn’t recommend them highly enough. Absolutely great team every single individual doing their best to assist in every step regardless of how minor or major it may be, 110% highly highly recommend to anyone looking to get the best results. Wouldn’t ever go else where. Thank you all once again we are forever grateful for everything</blockquote>
+      <cite>- Hadisa Hussaini</cite>
+    </figure>
+    <figure>
+      <svg class="q" viewBox="0 0 42 38" fill="#fff"><path d="M0 38V22Q0 6 14 0l3 5Q8 10 8 18h9v20zM25 38V22q0-16 14-22l3 5q-9 5-9 13h9v20z"/></svg>
+      <blockquote>My husband and I are extreamly happy with the service provided by Jamie Lamb and Lauren Tydeman at Thompson Finance &amp; Leaseing. They have been absolutely wonderful to deal with and incredibly patient waiting for me to get my documents in order. I would highly recommend them if you are looking for a home loan, much better service than any banks.</blockquote>
+      <cite>- Jasmine B</cite>
+    </figure>
+    <figure data-placeholder>
+      <svg class="q" viewBox="0 0 42 38" fill="#fff"><path d="M0 38V22Q0 6 14 0l3 5Q8 10 8 18h9v20zM25 38V22q0-16 14-22l3 5q-9 5-9 13h9v20z"/></svg>
+      <blockquote>Andrew Thompson had been recommended to us by our family who live in the Adelaide Hills. We met with Andrew and discussed our requirements for refinancing our property. Andrew kept us continually up to date with the refinancing process. Andrew’s support staff were so easy to work with and made the application so much easier to complete.
+I am very happy with the Thompson Financing, a very professional team,and would have no hesitation in recommending them to anyone requiring finance.</blockquote>
+      <cite>- Lou Anderson</cite>
+    </figure>
+    <figure data-placeholder>
+      <svg class="q" viewBox="0 0 42 38" fill="#fff"><path d="M0 38V22Q0 6 14 0l3 5Q8 10 8 18h9v20zM25 38V22q0-16 14-22l3 5q-9 5-9 13h9v20z"/></svg>
+      <blockquote>Had Andrew and his team from Thompson Finances assist in both our family business and personal finances. Couldn’t have had better results elsewhere and we couldn’t recommend them highly enough. Absolutely great team every single individual doing their best to assist in every step regardless of how minor or major it may be, 110% highly highly recommend to anyone looking to get the best results. Wouldn’t ever go else where. Thank you all once again we are forever grateful for everything</blockquote>
+      <cite>- Hadisa Hussaini</cite>
+    </figure>
+    <figure data-placeholder>
+      <svg class="q" viewBox="0 0 42 38" fill="#fff"><path d="M0 38V22Q0 6 14 0l3 5Q8 10 8 18h9v20zM25 38V22q0-16 14-22l3 5q-9 5-9 13h9v20z"/></svg>
+      <blockquote>My husband and I are extreamly happy with the service provided by Jamie Lamb and Lauren Tydeman at Thompson Finance &amp; Leaseing. They have been absolutely wonderful to deal with and incredibly patient waiting for me to get my documents in order. I would highly recommend them if you are looking for a home loan, much better service than any banks.</blockquote>
+      <cite>- Jasmine B</cite>
+    </figure>
+    </div>
+  </div>
+  <div class="tst__dots" id="tstDots"></div>
+  <div class="tst__word" aria-hidden="true"><img id="word" src="assets/thompson_word.png" alt=""></div>
+</section>
+
+<!-- 08 TEAM -->
+<section class="team rv-img" id="team">
+  <div class="team__bg"></div>
+  <div class="wrap">
+    <h2 class="rv">A local team<br>you can keep talking to</h2>
+    <p class="rv" style="--d:.1s">We're based in Woodside and work with clients across Hahndorf, Mount Barker, Lobethal, Oakbank and the wider Adelaide Hills.</p>
+    <p class="rv" style="--d:.2s">Finance is personal. You'll deal with people who know your situation, return your calls and stay across the detail, not a different voice every time you ring.</p>
+    <a class="btn rv" style="--d:.3s" href="#contact">Meet the team</a>
+  </div>
+</section>
+
+<!-- 09 CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact__l">
+    <div class="contact__pic rv-img">
+      <img class="mark" src="assets/logo_mark.svg" alt="">
+      <div class="ph"><img src="assets/09_contact_photo.jpg" alt="Signing home loan documents"></div>
+    </div>
+    <h2 class="rv">Start with<br>the decision<br>in front of you</h2>
+    <p class="rv">You now know what we do, how we work and what the first step involves.</p>
+    <p class="rv">If you're ready to move, book a conversation. If you're still weighing things up, that's fine too. Explore the option that fits your situation and come back when you're ready.</p>
+    <p class="rv">Either way, you won't have to work it out alone.</p>
+  </div>
+  <form class="contact__r" id="form">
+    <div class="field rv"><label for="f-name">Your name</label><input id="f-name" placeholder="Name" required></div>
+    <div class="field rv"><label for="f-email">Email address</label><input id="f-email" type="email" placeholder="Email" required></div>
+    <div class="field rv"><label for="f-phone">Phone number</label><input id="f-phone" type="tel" placeholder="Phone"></div>
+    <div class="field rv"><label for="f-plan">Tell us about your plan</label><textarea id="f-plan" placeholder="Initial ideas"></textarea></div>
+    <button class="btn btn--navy" type="submit">Submit</button>
+    <p class="sent" id="sent" aria-live="polite"></p>
+  </form>
+</section>
+</main>
+
+<!-- 10 FOOTER -->
+<footer class="ftr">
+  <div class="ftr__top">
+    <img class="ftr__logo" src="assets/logo.svg" alt="Thompson Finance &amp; Leasing">
+    <dl>
+      <dt>PHONE</dt><dd><a href="tel:0427100670">0427 100 670</a></dd>
+      <dt>MAIL</dt><dd><a href="mailto:admin@thompsonfal.com.au">admin@thompsonfal.com.au</a></dd>
+    </dl>
+    <dl>
+      <dt>ADDRESS</dt><dd>59 Onkaparinga Valley Rd, Woodside SA 5244</dd>
+      <dd class="social">
+        <a href="#" aria-label="Facebook"><img src="assets/icon_facebook.png" alt=""></a>
+        <a href="#" aria-label="Instagram"><img src="assets/icon_instagram.png" alt=""></a>
+      </dd>
+    </dl>
+  </div>
+  <nav class="ftr__nav">
+    <a href="#services">Home loans</a><a href="#services">Refinancing</a><a href="#services">Business finance</a><a href="#services">Asset and vehicle finance</a>
+  </nav>
+  <div class="ftr__rule"></div>
+  <p class="ftr__copy">All rights reserved © 2026 Thompson Finance &amp; Leasing</p>
+</footer>
+
+<script>
+(() => {
+  // loader: logo animation plays once, then wipes up to reveal the page
+  const loader = document.getElementById('loader'), loaderVid = document.getElementById('loaderVid');
+  let revealed = false;
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    loader.classList.add('done');
+    document.documentElement.classList.remove('loading');
+    document.body.classList.add('ready');
+    setTimeout(() => loader.remove(), 1200);
+  }
+  // the logo finishes forming at ~3.8s; the rest of the clip is a still hold
+  const REVEAL_AT = 4.0;
+  (function watch() {
+    if (revealed) return;
+    if (loaderVid.currentTime >= REVEAL_AT) reveal();
+    else requestAnimationFrame(watch);
+  })();
+  loaderVid.addEventListener('ended', reveal);
+  document.getElementById('loaderSkip').addEventListener('click', reveal);
+  addEventListener('keydown', e => { if (e.key === 'Escape') reveal(); });
+  loaderVid.addEventListener('error', reveal);
+  const p = loaderVid.play();
+  if (p) p.catch(reveal);
+  setTimeout(reveal, 6500);
+  const hdr = document.getElementById('hdr');
+  const burger = document.getElementById('burger');
+  burger.addEventListener('click', () => document.body.classList.toggle('menu-open'));
+  document.querySelectorAll('#nav a').forEach(a => a.addEventListener('click', () => document.body.classList.remove('menu-open')));
+
+  // reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    if (e.target.classList.contains('stat')) count(e.target.querySelector('.stat__num'));
+    io.unobserve(e.target);
+  }), {threshold: .18, rootMargin: '0px 0px -40px 0px'});
+  document.querySelectorAll('.rv,.rv-img,.rv-line').forEach(el => io.observe(el));
+
+  // stat count-up
+  function count(el) {
+    const to = parseFloat(el.dataset.to), dec = +(el.dataset.dec || 0), t0 = performance.now(), dur = 1600;
+    (function tick(t) {
+      const k = Math.min((t - t0) / dur, 1), v = to * (1 - Math.pow(1 - k, 3));
+      el.textContent = v.toFixed(dec);
+      if (k < 1) requestAnimationFrame(tick);
+    })(t0);
+  }
+
+  // header + parallax
+  const procBg = document.getElementById('procBg'), word = document.getElementById('word');
+  let ticking = false;
+  function onScroll() {
+    const y = scrollY, vh = innerHeight;
+    hdr.classList.toggle('solid', y > 80);
+    const pr = procBg.parentElement.getBoundingClientRect();
+    if (pr.bottom > 0 && pr.top < vh) procBg.style.transform = `translateY(${(pr.top + pr.height / 2 - vh / 2) * -0.12}px)`;
+    const wr = word.parentElement.getBoundingClientRect();
+    if (wr.bottom > 0 && wr.top < vh) {
+      const k = Math.max(0, Math.min(1, (vh - wr.top) / (vh * .8)));
+      word.style.transform = `translateY(${30 - k * 30}%)`;
+      word.style.opacity = .35 + k * .65;
+    }
+    ticking = false;
+  }
+  addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(onScroll); ticking = true; } }, {passive: true});
+  onScroll();
+
+  // testimonial carousel: slides left and loops by moving passed cards to the end;
+  // one dot per unique review (cards marked data-placeholder repeat the originals)
+  const track = document.getElementById('tstTrack'), dotsEl = document.getElementById('tstDots');
+  const cards = [...track.children], unique = cards.filter(c => !c.hasAttribute('data-placeholder')).length;
+  cards.forEach((c, i) => c.dataset.i = i % unique);
+  const dots = Array.from({length: unique}, (_, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', `Show review ${i + 1}`);
+    b.addEventListener('click', () => { go(i); play(); });
+    dotsEl.appendChild(b);
+    return b;
+  });
+  const current = () => +track.firstElementChild.dataset.i;
+  const mark = () => dots.forEach((d, i) => d.classList.toggle('on', i === current()));
+  let busy = false, timer;
+  const step = () => track.firstElementChild.offsetWidth + parseFloat(getComputedStyle(track).columnGap);
+  function slide(n) {
+    if (busy || n <= 0) return;
+    busy = true;
+    track.classList.add('anim');
+    track.style.transform = `translateX(${-step() * n}px)`;
+    setTimeout(() => {
+      track.classList.remove('anim');
+      for (let k = 0; k < n; k++) track.appendChild(track.firstElementChild);
+      track.style.transform = 'none';
+      busy = false;
+      mark();
+    }, 950);
+  }
+  const go = i => slide((i - current() + unique) % unique);
+  const play = () => { clearInterval(timer); timer = setInterval(() => slide(1), 5000); };
+  const pause = () => clearInterval(timer);
+  const vp = track.parentElement;
+  vp.addEventListener('mouseenter', pause);
+  vp.addEventListener('mouseleave', play);
+  document.addEventListener('visibilitychange', () => document.hidden ? pause() : play());
+  mark();
+  play();
+
+  // demo form
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('sent').textContent = 'Thanks, we\'ll be in touch shortly.';
+    e.target.reset();
+  });
+})();
+</script>
+</body>
+</html>
